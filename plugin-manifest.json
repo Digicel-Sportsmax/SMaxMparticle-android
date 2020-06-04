@@ -28,36 +28,16 @@
   "deprecated_since_zapp_sdk": "",
   "unsupported_since_zapp_sdk": "",
   "react_native": false,
-  "custom_configuration_fields": [
+  "custom_configuration_fields": [ 
     {
       "type": "text",
-      "key": "branch_api_key_sandbox",
-      "tooltip_text": "Branch api key sandbox"
-    },
-	{
-      "type": "text",
-      "key": "branch_api_key_live",
-      "tooltip_text": "Branch api key live"
-    },
-	{
-      "type": "text",
-      "key": "branch_app_id_sandbox",
-      "tooltip_text": "Branch app id sandbox"
+      "key": "mparticle_key",
+      "tooltip_text": "mParticle Production Key"
     },
     {
       "type": "text",
-      "key": "branch_app_id_live",
-      "tooltip_text": "Branch app id live"
-    },
-    {
-      "type": "text",
-      "key": "mparticle_api_key",
-      "tooltip_text": "mparticle api key"
-    },
-    {
-      "type": "text",
-      "key": "mparticle_api_secret_key",
-      "tooltip_text": "mparticle api key secret"
+      "key": "mparticle_secret",
+      "tooltip_text": "mParticle Production Secret"
     }
   ]
 }
