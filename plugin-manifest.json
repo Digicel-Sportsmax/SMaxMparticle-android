@@ -1,0 +1,63 @@
+{
+  "api": {
+    "require_startup_execution": false,
+    "class_name": "com.sportsmax.mparticle_android.MParticleAnalyticsAgent",
+    "modules": []
+  },
+  "dependency_repository_url": [ 
+    {
+      "url": "https://github.com/Digicel-Sportsmax/SMaxMparticle-android.git"
+    }
+  ],
+  "platform": "android",  
+  "author_name": "Hussein Yassine",
+  "author_email": "hussein.yassine@gotocme.com",
+  "manifest_version": "0.0.1",
+  "name": "SMaxMparticle-android",
+  "description": "SMaxMparticle-android",
+  "type": "analytics",
+  "identifier": "SMaxMParticle",
+  "ui_builder_support": true,
+  "screen": false,
+  "dependency_name": "com.applicaster:SMaxMparticle-android",
+  "dependency_version": "0.0.29",
+  "whitelisted_account_ids": [
+    "5af949534da8f300080050f9"
+  ],
+  "min_zapp_sdk": "11.2.0",
+  "deprecated_since_zapp_sdk": "",
+  "unsupported_since_zapp_sdk": "",
+  "react_native": false,
+  "custom_configuration_fields": [
+    {
+      "type": "text",
+      "key": "branch_api_key_sandbox",
+      "tooltip_text": "Branch api key sandbox"
+    },
+	{
+      "type": "text",
+      "key": "branch_api_key_live",
+      "tooltip_text": "Branch api key live"
+    },
+	{
+      "type": "text",
+      "key": "branch_app_id_sandbox",
+      "tooltip_text": "Branch app id sandbox"
+    },
+    {
+      "type": "text",
+      "key": "branch_app_id_live",
+      "tooltip_text": "Branch app id live"
+    },
+    {
+      "type": "text",
+      "key": "mparticle_api_key",
+      "tooltip_text": "mparticle api key"
+    },
+    {
+      "type": "text",
+      "key": "mparticle_api_secret_key",
+      "tooltip_text": "mparticle api key secret"
+    }
+  ]
+}

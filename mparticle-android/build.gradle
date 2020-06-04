@@ -74,6 +74,17 @@ android {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.applicaster:applicaster-android-sdk:5.0.1'
+
+    implementation 'io.branch.sdk.android:library:5.+'
+    implementation 'com.mparticle:android-core:5+'
+    // required if your app is in the Google Play Store (tip: avoid using bundled play services libs)
+    implementation 'com.google.firebase:firebase-appindexing:19.1.0'
+    implementation 'com.google.android.gms:play-services-ads-identifier:17.0.0'
+    // Recommended to query the Google Play install referrer
+    implementation 'com.android.installreferrer:installreferrer:1.0'
+    // optional
+    // Chrome Tab matching (enables 100% guaranteed matching based on cookies)
+    implementation 'androidx.browser:browser:1.2.0'
 }
 
 
