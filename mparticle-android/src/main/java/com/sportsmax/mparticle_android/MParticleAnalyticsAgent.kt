@@ -17,6 +17,9 @@ class MParticleAnalyticsAgent : BaseAnalyticsAgent() {
 
     private val TAG: String = MParticleAnalyticsAgent::class.java.simpleName
 
+    private val MAX_SCREEN_NAME_LONG = 35
+    private val MAX_PARAM_NAME_LONG = 40
+    private val MAX_PARAM_VALUE_LONG = 100
 
     // custom events
     private val PLAY_EVENT = "Play_video"
@@ -134,7 +137,7 @@ class MParticleAnalyticsAgent : BaseAnalyticsAgent() {
     override fun logEvent(eventName: String?) {
         super.logEvent(eventName)
         eventName?.let { it ->
-            val event = MPEvent.Builder(cleanString(it), MParticle.EventType.Other)
+            val event = MPEvent.Builder(it.alphaNumericOnly().cutToMaxLength(MAX_PARAM_NAME_LONG), MParticle.EventType.Other)
                 .build()
             MParticle.getInstance()?.logEvent(event)
         }
@@ -157,21 +160,14 @@ class MParticleAnalyticsAgent : BaseAnalyticsAgent() {
             params?.let { params ->
                 val newTree = TreeMap<String, String>()
                 for ((key, value) in params.entries) {
-                    newTree[cleanString(key)] = cleanString(value)
+                    newTree[key.alphaNumericOnly().cutToMaxLength(MAX_PARAM_NAME_LONG)] = value.alphaNumericOnly().cutToMaxLength(MAX_PARAM_VALUE_LONG)
                 }
-                val event = MPEvent.Builder(cleanString(it), MParticle.EventType.Other)
+                val event = MPEvent.Builder(it.alphaNumericOnly().cutToMaxLength(MAX_PARAM_NAME_LONG), MParticle.EventType.Other)
                     .customAttributes(newTree)
                     .build()
                 MParticle.getInstance()?.logEvent(event)
             }
         }
-    }
-
-    private fun cleanString(name: String): String {
-        return name
-            .replace(" ", "_")
-            .replace("-", "_")
-            .replace(":", "_").trim()
     }
 
     override fun startTimedEvent(eventName: String?) {
@@ -250,9 +246,29 @@ class MParticleAnalyticsAgent : BaseAnalyticsAgent() {
 
     override fun setScreenView(activity: Activity?, screenView: String) {
         super.setScreenView(activity, screenView)
+        val screenName = if (screenView.contains("ATOM Article", ignoreCase = true)){
+            val title = screenView.replace("ATOM Article", "Article").trim()
+            title
+        }else{
+            screenView
+        }
+
         val map = TreeMap<String, String>()
-        map["Screen_name"] = screenView
-        MParticle.getInstance()?.logScreen(screenView, null)
+        map["Screen_name"] = screenName.cutToMaxLength(MAX_SCREEN_NAME_LONG)
+        MParticle.getInstance()?.logScreen(screenName.cutToMaxLength(MAX_SCREEN_NAME_LONG), null)
         MParticle.getInstance()?.logScreen("screen_visit", map)
     }
+}
+
+fun String.cutToMaxLength(maxLength: Int): String{
+    return if (this.length > maxLength){
+        this.substring(0, maxLength)
+    }else{
+        this
+    }
+}
+
+fun String.alphaNumericOnly(): String{
+    val regex = Regex("[^A-Za-z0-9 ]")
+    return regex.replace(this, "").replace(" ","_")
 }
