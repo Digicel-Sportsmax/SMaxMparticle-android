@@ -25,16 +25,16 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="https" android:host="tb7w5.app.link" />
+                <data android:scheme="https" android:host="sportsmax.test-app.link" />
                 <!-- example-alternate domain is required for App Links when the Journeys/Web SDK and Deepviews are used inside your website.  -->
-                <data android:scheme="https" android:host="tb7w5-alternate.app.link" />
+                <data android:scheme="https" android:host="sportsmax-alternate.test-app.link" />
             </intent-filter>
 
         </activity>
 
         <!-- Branch init -->
         <meta-data android:name="io.branch.sdk.BranchKey" android:value="key_live_fgSV319qYfEeNah5DLlYvcgpzDp5A3zr" />
-        <meta-data android:name="io.branch.sdk.BranchKey.test" android:value="key_test_nhQR711zYjzjRdc1FJj9Vbifsyo5BXFM" />
+        <meta-data android:name="io.branch.sdk.BranchKey.test" android:value="key_test_kiOMU6AxfmJ7vzf8WZ4waghfrBkVO9jO" />
         <meta-data android:name="io.branch.sdk.TestMode" android:value="true" />     <!-- Set to true to use Branch_Test_Key (useful when simulating installs and/or switching between debug and production flavors) -->
 
     </application>
