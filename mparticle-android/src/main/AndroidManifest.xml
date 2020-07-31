@@ -33,9 +33,9 @@
         </activity>
 
         <!-- Branch init -->
-        <meta-data android:name="io.branch.sdk.BranchKey" android:value="key_live_fgSV319qYfEeNah5DLlYvcgpzDp5A3zr" />
-        <meta-data android:name="io.branch.sdk.BranchKey.test" android:value="key_test_kiOMU6AxfmJ7vzf8WZ4waghfrBkVO9jO" />
-        <meta-data android:name="io.branch.sdk.TestMode" android:value="true" />     <!-- Set to true to use Branch_Test_Key (useful when simulating installs and/or switching between debug and production flavors) -->
+        <!-- <meta-data android:name="io.branch.sdk.BranchKey" android:value="key_live_fgSV319qYfEeNah5DLlYvcgpzDp5A3zr" /> -->
+        <!-- <meta-data android:name="io.branch.sdk.BranchKey.test" android:value="key_test_kiOMU6AxfmJ7vzf8WZ4waghfrBkVO9jO" /> -->
+        <!-- <meta-data android:name="io.branch.sdk.TestMode" android:value="true" /> -->     <!-- Set to true to use Branch_Test_Key (useful when simulating installs and/or switching between debug and production flavors) -->
 
     </application>
 
