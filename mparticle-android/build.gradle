@@ -86,6 +86,12 @@ dependencies {
     // optional
     // Chrome Tab matching (enables 100% guaranteed matching based on cookies)
     implementation 'androidx.browser:browser:1.2.0'
+
+    //firebase
+    def firebase_version = "17.1.0"
+    implementation 'com.google.firebase:firebase-analytics:'+firebase_version
+    implementation 'com.google.firebase:firebase-core:'+firebase_version
+    implementation 'com.google.android.gms:play-services-analytics:17.0.0'
 }
 
 
