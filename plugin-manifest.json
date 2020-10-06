@@ -12,7 +12,7 @@
   "platform": "android",
   "author_name": "Hussein Yassine",
   "author_email": "hussein.yassine@gotocme.com",
-  "manifest_version": "0.0.8,
+  "manifest_version": "0.0.8",
   "name": "SMaxMparticle",
   "description": "SMaxMparticle",
   "type": "analytics",
