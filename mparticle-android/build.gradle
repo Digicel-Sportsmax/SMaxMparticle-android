@@ -77,7 +77,7 @@ dependencies {
 
     implementation 'io.branch.sdk.android:library:5.+'
     implementation 'com.mparticle:android-googleanalyticsfirebase-kit:5+'
-//    implementation 'com.mparticle:android-core:5+'
+    implementation 'com.mparticle:android-core:5+'
     // required if your app is in the Google Play Store (tip: avoid using bundled play services libs)
     implementation 'com.google.firebase:firebase-appindexing:19.1.0'
     implementation 'com.google.android.gms:play-services-ads-identifier:17.0.0'
