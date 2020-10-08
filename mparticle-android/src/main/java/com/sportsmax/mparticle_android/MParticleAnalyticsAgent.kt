@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import com.applicaster.analytics.BaseAnalyticsAgent
 import com.applicaster.app.CustomApplication
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.mparticle.*
 import com.mparticle.BuildConfig
 import io.branch.referral.Branch
@@ -25,6 +26,8 @@ class MParticleAnalyticsAgent : BaseAnalyticsAgent() {
     private val PLAY_EVENT = "Play_video"
     private val PAUSE_EVENT = "Pause_video"
     private val STOP_EVENT = "Stop_video"
+    @Transient
+    private var firebaseAnalytics: FirebaseAnalytics? = null
 
     /**
      * Initialization of your Analytics provider.
@@ -41,6 +44,7 @@ class MParticleAnalyticsAgent : BaseAnalyticsAgent() {
 
     private fun init(context: Context) {
         val customApp = context as? CustomApplication
+        firebaseAnalytics = FirebaseAnalytics.getInstance(context)
         Branch.getAutoInstance(context)
         initializeMParticle(context)
     }
@@ -128,6 +132,9 @@ class MParticleAnalyticsAgent : BaseAnalyticsAgent() {
 
     override fun stopTrackingSession(context: Context?) {
         super.stopTrackingSession(context)
+        if (firebaseAnalytics != null) {
+            firebaseAnalytics = null
+        }
     }
 
     override fun analyticsSwitch(enabled: Boolean) {
@@ -140,6 +147,9 @@ class MParticleAnalyticsAgent : BaseAnalyticsAgent() {
             val event = MPEvent.Builder(it.alphaNumericOnly().cutToMaxLength(MAX_PARAM_NAME_LONG), MParticle.EventType.Other)
                 .build()
             MParticle.getInstance()?.logEvent(event)
+        }
+        eventName?.let { it ->
+            firebaseAnalytics?.logEvent(it.alphaNumericOnly().cutToMaxLength(MAX_PARAM_NAME_LONG), null)
         }
     }
 
@@ -257,6 +267,7 @@ class MParticleAnalyticsAgent : BaseAnalyticsAgent() {
         map["Screen_name"] = screenName.cutToMaxLength(MAX_SCREEN_NAME_LONG)
         MParticle.getInstance()?.logScreen(screenName.cutToMaxLength(MAX_SCREEN_NAME_LONG), null)
         MParticle.getInstance()?.logScreen("screen_visit", map)
+        activity?.let { firebaseAnalytics?.setCurrentScreen(it, screenName.cutToMaxLength(MAX_SCREEN_NAME_LONG), null) }
     }
 }
 

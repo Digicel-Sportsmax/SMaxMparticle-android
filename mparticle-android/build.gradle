@@ -95,6 +95,7 @@ dependencies {
 }
 
 
+
 //---------------------------------- Bintray ----------------------------------//
 apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
