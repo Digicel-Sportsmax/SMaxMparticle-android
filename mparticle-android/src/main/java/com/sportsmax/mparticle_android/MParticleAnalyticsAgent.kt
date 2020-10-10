@@ -28,6 +28,7 @@ class MParticleAnalyticsAgent : BaseAnalyticsAgent() {
     private val STOP_EVENT = "Stop_video"
     @Transient
     private var firebaseAnalytics: FirebaseAnalytics? = null
+     private lateinit var mContext: Context
 
     /**
      * Initialization of your Analytics provider.
@@ -40,6 +41,7 @@ class MParticleAnalyticsAgent : BaseAnalyticsAgent() {
     override fun initializeAnalyticsAgent(context: Context?) {
         super.initializeAnalyticsAgent(context)
         init(context!!)
+        mContext= context
     }
 
     private fun init(context: Context) {
@@ -133,6 +135,9 @@ class MParticleAnalyticsAgent : BaseAnalyticsAgent() {
 
     override fun logEvent(eventName: String?) {
         super.logEvent(eventName)
+        if(MParticle.getInstance() == null){
+            initializeMParticle(mContext)
+        }
         eventName?.let { it ->
             val event = MPEvent.Builder(it.alphaNumericOnly().cutToMaxLength(MAX_PARAM_NAME_LONG), MParticle.EventType.Other)
                 .build()
@@ -155,6 +160,11 @@ class MParticleAnalyticsAgent : BaseAnalyticsAgent() {
      */
     override fun logEvent(eventName: String?, params: TreeMap<String, String>?) {
         super.logEvent(eventName, params)
+
+        if(MParticle.getInstance() == null){
+            initializeMParticle(mContext)
+        }
+
         eventName?.let { it ->
 
             params?.let { params ->
@@ -253,13 +263,8 @@ class MParticleAnalyticsAgent : BaseAnalyticsAgent() {
             screenView
         }
 
-        MParticle.getInstance()?.let {
-            print("mParticle initialized")
-        }
         if(MParticle.getInstance() == null){
-            print("mParticle not initialized")
-        }else{
-            print("mParticle initialized")
+            initializeMParticle(mContext)
         }
         val map = TreeMap<String, String>()
         map["Screen_name"] = screenName.cutToMaxLength(MAX_SCREEN_NAME_LONG)
