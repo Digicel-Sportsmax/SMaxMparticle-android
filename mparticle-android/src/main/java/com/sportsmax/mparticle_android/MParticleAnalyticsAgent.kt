@@ -54,20 +54,21 @@ class MParticleAnalyticsAgent : BaseAnalyticsAgent() {
         val packageName = context.packageName
         val options = MParticleOptions.builder(context)
 
-        /*val isDevelopment =
+        val isDevelopment =
             packageName.contains("local")
                     || packageName.contains("staging")
                     || BuildConfig.DEBUG
 
-        if (isDevelopment) {
-            options.credentials(context.getString(com.sportsmax.branch_io.R.string.branch_test_key),
-                    context.getString(com.sportsmax.branch_io.R.string.branch_test_secret_key))
-            options.environment(MParticle.Environment.Development)
-        } else {
-            options.credentials(context.getString(com.sportsmax.branch_io.R.string.branch_live_key),
-                    context.getString(com.sportsmax.branch_io.R.string.branch_live_secret_key))
-            options.environment(MParticle.Environment.Production)
-        }*/
+//        if (isDevelopment) {
+//            options.credentials(context.getString(com.sportsmax.branch_io.R.string.branch_test_key),
+//                    context.getString(com.sportsmax.branch_io.R.string.branch_test_secret_key))
+//            options.environment(MParticle.Environment.Development)
+//        } else {
+//            options.credentials(context.getString(com.sportsmax.branch_io.R.string.branch_live_key),
+//                    context.getString(com.sportsmax.branch_io.R.string.branch_live_secret_key))
+//            options.environment(MParticle.Environment.Production)
+//        }
+
 
         options.credentials(PluginConfigurationHelper.getConfigurationValue(MPARTICLE_API_KEY),
             PluginConfigurationHelper.getConfigurationValue(MPARTICLE_API_SECRET_KEY))
