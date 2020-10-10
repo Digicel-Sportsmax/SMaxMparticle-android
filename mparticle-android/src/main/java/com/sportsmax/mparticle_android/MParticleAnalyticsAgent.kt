@@ -59,17 +59,6 @@ class MParticleAnalyticsAgent : BaseAnalyticsAgent() {
                     || packageName.contains("staging")
                     || BuildConfig.DEBUG
 
-//        if (isDevelopment) {
-//            options.credentials(context.getString(com.sportsmax.branch_io.R.string.branch_test_key),
-//                    context.getString(com.sportsmax.branch_io.R.string.branch_test_secret_key))
-//            options.environment(MParticle.Environment.Development)
-//        } else {
-//            options.credentials(context.getString(com.sportsmax.branch_io.R.string.branch_live_key),
-//                    context.getString(com.sportsmax.branch_io.R.string.branch_live_secret_key))
-//            options.environment(MParticle.Environment.Production)
-//        }
-
-
         options.credentials(PluginConfigurationHelper.getConfigurationValue(MPARTICLE_API_KEY),
             PluginConfigurationHelper.getConfigurationValue(MPARTICLE_API_SECRET_KEY))
         options.environment(MParticle.Environment.Development)
@@ -264,6 +253,14 @@ class MParticleAnalyticsAgent : BaseAnalyticsAgent() {
             screenView
         }
 
+        MParticle.getInstance()?.let {
+            print("mParticle initialized")
+        }
+        if(MParticle.getInstance() == null){
+            print("mParticle not initialized")
+        }else{
+            print("mParticle initialized")
+        }
         val map = TreeMap<String, String>()
         map["Screen_name"] = screenName.cutToMaxLength(MAX_SCREEN_NAME_LONG)
         MParticle.getInstance()?.logScreen(screenName.cutToMaxLength(MAX_SCREEN_NAME_LONG), null)
