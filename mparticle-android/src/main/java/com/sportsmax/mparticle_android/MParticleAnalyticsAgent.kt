@@ -13,6 +13,7 @@ import io.branch.referral.Branch
 import io.branch.referral.BranchError
 import org.json.JSONObject
 import java.util.*
+import kotlin.math.log
 
 class MParticleAnalyticsAgent : BaseAnalyticsAgent() {
 
@@ -28,7 +29,6 @@ class MParticleAnalyticsAgent : BaseAnalyticsAgent() {
     private val STOP_EVENT = "Stop_video"
     @Transient
     private var firebaseAnalytics: FirebaseAnalytics? = null
-     private lateinit var mContext: Context
 
     /**
      * Initialization of your Analytics provider.
@@ -41,7 +41,6 @@ class MParticleAnalyticsAgent : BaseAnalyticsAgent() {
     override fun initializeAnalyticsAgent(context: Context?) {
         super.initializeAnalyticsAgent(context)
         init(context!!)
-        mContext= context
     }
 
     private fun init(context: Context) {
@@ -54,26 +53,42 @@ class MParticleAnalyticsAgent : BaseAnalyticsAgent() {
 
     private fun initializeMParticle(context: Context) {
         val packageName = context.packageName
-        val options = MParticleOptions.builder(context)
+//        val options = MParticleOptions.builder(context)
 
         val isDevelopment =
             packageName.contains("local")
                     || packageName.contains("staging")
                     || BuildConfig.DEBUG
 
-        options.credentials(PluginConfigurationHelper.getConfigurationValue(MPARTICLE_API_KEY),
-            PluginConfigurationHelper.getConfigurationValue(MPARTICLE_API_SECRET_KEY))
-        options.environment(MParticle.Environment.Development)
-        options.attributionListener(object: AttributionListener{
-            override fun onResult(p0: AttributionResult) {
-                TODO("Not yet implemented")
-            }
+//        options.credentials(PluginConfigurationHelper.getConfigurationValue(MPARTICLE_API_KEY),
+//            PluginConfigurationHelper.getConfigurationValue(MPARTICLE_API_SECRET_KEY))
+//        options.environment(MParticle.Environment.Development)
+//        options.attributionListener(object: AttributionListener{
+//            override fun onResult(p0: AttributionResult) {
+//                TODO("Not yet implemented")
+//            }
+//
+//            override fun onError(p0: AttributionError) {
+//                TODO("Not yet implemented")
+//            }
+//        })
+//        MParticle.start(options.build())
 
-            override fun onError(p0: AttributionError) {
-                TODO("Not yet implemented")
-            }
-        })
-        MParticle.start(options.build())
+        Log.wtf("API_KEY_MPARTICLE" ,PluginConfigurationHelper.getConfigurationValue(MPARTICLE_API_KEY))
+        Log.wtf("SECRET_KEY_MPARTICLE" ,PluginConfigurationHelper.getConfigurationValue(MPARTICLE_API_KEY))
+
+        val env : MParticle.Environment
+        env = if(isDevelopment){
+            MParticle.Environment.Development
+        }else{
+            MParticle.Environment.Production
+        }
+
+        val options = MParticleOptions.builder(context)
+            .credentials(PluginConfigurationHelper.getConfigurationValue(MPARTICLE_API_KEY), PluginConfigurationHelper.getConfigurationValue(MPARTICLE_API_SECRET_KEY))
+            .environment(env)
+            .build()
+        MParticle.start(options)
     }
 
     override fun setParams(params: Map<*, *>) {
@@ -135,9 +150,6 @@ class MParticleAnalyticsAgent : BaseAnalyticsAgent() {
 
     override fun logEvent(eventName: String?) {
         super.logEvent(eventName)
-        if(MParticle.getInstance() == null){
-            initializeMParticle(mContext)
-        }
         eventName?.let { it ->
             val event = MPEvent.Builder(it.alphaNumericOnly().cutToMaxLength(MAX_PARAM_NAME_LONG), MParticle.EventType.Other)
                 .build()
@@ -160,11 +172,6 @@ class MParticleAnalyticsAgent : BaseAnalyticsAgent() {
      */
     override fun logEvent(eventName: String?, params: TreeMap<String, String>?) {
         super.logEvent(eventName, params)
-
-        if(MParticle.getInstance() == null){
-            initializeMParticle(mContext)
-        }
-
         eventName?.let { it ->
 
             params?.let { params ->
@@ -261,10 +268,6 @@ class MParticleAnalyticsAgent : BaseAnalyticsAgent() {
             title
         }else{
             screenView
-        }
-
-        if(MParticle.getInstance() == null){
-            initializeMParticle(mContext)
         }
         val map = TreeMap<String, String>()
         map["Screen_name"] = screenName.cutToMaxLength(MAX_SCREEN_NAME_LONG)
