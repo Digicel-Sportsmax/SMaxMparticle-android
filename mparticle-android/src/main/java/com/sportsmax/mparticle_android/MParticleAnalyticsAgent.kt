@@ -53,7 +53,7 @@ class MParticleAnalyticsAgent : BaseAnalyticsAgent() {
 
     private fun initializeMParticle(context: Context) {
         val packageName = context.packageName
-//        val options = MParticleOptions.builder(context)
+        val options = MParticleOptions.builder(context)
 
         val isDevelopment =
             packageName.contains("local")
@@ -72,23 +72,20 @@ class MParticleAnalyticsAgent : BaseAnalyticsAgent() {
 //                TODO("Not yet implemented")
 //            }
 //        })
-//        MParticle.start(options.build())
 
-        Log.wtf("API_KEY_MPARTICLE" ,PluginConfigurationHelper.getConfigurationValue(MPARTICLE_API_KEY))
-        Log.wtf("SECRET_KEY_MPARTICLE" ,PluginConfigurationHelper.getConfigurationValue(MPARTICLE_API_KEY))
+        options.credentials("us1-3ddbb7e4290f134785871dbddb6d7fab",
+            "rIxOQTO405wWdsPECoJledrmI_eu0LrpPqwqFUSF8oUZkhrdBK5LnREZjH2G63Io")
+        options.environment(MParticle.Environment.Development)
+        options.attributionListener(object: AttributionListener{
+            override fun onResult(p0: AttributionResult) {
+                TODO("Not yet implemented")
+            }
 
-        val env : MParticle.Environment
-        env = if(isDevelopment){
-            MParticle.Environment.Development
-        }else{
-            MParticle.Environment.Production
-        }
-
-        val options = MParticleOptions.builder(context)
-            .credentials(PluginConfigurationHelper.getConfigurationValue(MPARTICLE_API_KEY), PluginConfigurationHelper.getConfigurationValue(MPARTICLE_API_SECRET_KEY))
-            .environment(env)
-            .build()
-        MParticle.start(options)
+            override fun onError(p0: AttributionError) {
+                TODO("Not yet implemented")
+            }
+        })
+        MParticle.start(options.build())
     }
 
     override fun setParams(params: Map<*, *>) {
