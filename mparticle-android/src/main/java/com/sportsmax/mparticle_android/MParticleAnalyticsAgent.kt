@@ -60,21 +60,8 @@ class MParticleAnalyticsAgent : BaseAnalyticsAgent() {
                     || packageName.contains("staging")
                     || BuildConfig.DEBUG
 
-//        options.credentials(PluginConfigurationHelper.getConfigurationValue(MPARTICLE_API_KEY),
-//            PluginConfigurationHelper.getConfigurationValue(MPARTICLE_API_SECRET_KEY))
-//        options.environment(MParticle.Environment.Development)
-//        options.attributionListener(object: AttributionListener{
-//            override fun onResult(p0: AttributionResult) {
-//                TODO("Not yet implemented")
-//            }
-//
-//            override fun onError(p0: AttributionError) {
-//                TODO("Not yet implemented")
-//            }
-//        })
-
-        options.credentials("us1-3ddbb7e4290f134785871dbddb6d7fab",
-            "rIxOQTO405wWdsPECoJledrmI_eu0LrpPqwqFUSF8oUZkhrdBK5LnREZjH2G63Io")
+        options.credentials(PluginConfigurationHelper.getConfigurationValue(MPARTICLE_API_KEY),
+            PluginConfigurationHelper.getConfigurationValue(MPARTICLE_API_SECRET_KEY))
         options.environment(MParticle.Environment.Development)
         options.attributionListener(object: AttributionListener{
             override fun onResult(p0: AttributionResult) {
