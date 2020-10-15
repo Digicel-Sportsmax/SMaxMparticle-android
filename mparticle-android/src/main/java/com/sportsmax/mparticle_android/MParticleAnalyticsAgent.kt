@@ -60,9 +60,16 @@ class MParticleAnalyticsAgent : BaseAnalyticsAgent() {
                     || packageName.contains("staging")
                     || BuildConfig.DEBUG
 
-        options.credentials(PluginConfigurationHelper.getConfigurationValue(MPARTICLE_API_KEY),
-            PluginConfigurationHelper.getConfigurationValue(MPARTICLE_API_SECRET_KEY))
-        options.environment(MParticle.Environment.Development)
+        if(isDevelopment){
+            options.credentials(PluginConfigurationHelper.getConfigurationValue(MPARTICLE_API_KEY),
+                PluginConfigurationHelper.getConfigurationValue(MPARTICLE_API_SECRET_KEY))
+            options.environment(MParticle.Environment.Development)
+        }else{
+            options.credentials(PluginConfigurationHelper.getConfigurationValue(MPARTICLE_API_KEY),
+                PluginConfigurationHelper.getConfigurationValue(MPARTICLE_API_SECRET_KEY))
+            options.environment(MParticle.Environment.Production)
+        }
+
         options.attributionListener(object: AttributionListener{
             override fun onResult(p0: AttributionResult) {
                 TODO("Not yet implemented")
